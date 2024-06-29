@@ -35,6 +35,7 @@ const initialState =[
 
 function App() {
 const [todos, setTodos] = useState(initialState)
+const [filter, setFilter] = useState("all")
 
 const createTodo = (title)=>{
   const newTodo = {
@@ -52,6 +53,28 @@ const deleteTodo = (id)=>{
 const updateTodo = (id)=>{
   setTodos(todos.map((todo)=>todo.id===id ? {...todo, completed:!todo.completed} : todo))
 }
+const completedItemsLeft= todos.filter((todo)=> !todo.completed).length
+
+const clearCompleted = ()=>{
+  setTodos(todos.filter((todo)=>!todo.completed))
+}
+const changeFilter = (filter)=>{
+  setFilter(filter)
+}
+
+const filteredTodos = ()=>{
+  switch (filter) {
+    case "all":
+      return todos
+    case "completed":
+      return todos.filter((todo)=>todo.completed)
+    case "active":
+      return todos.filter((todo)=>!todo.completed)
+    default:
+      return todos
+  }
+}
+
 
   return (
     <>
@@ -62,13 +85,13 @@ const updateTodo = (id)=>{
           <TodoCreate createTodo={createTodo} />
 
           <main className="mt-8 bg-white rounded-md">
-            <TodoList todos={todos} deleteTodo={deleteTodo} updateTodo={updateTodo } />
+            <TodoList todos={filteredTodos()} deleteTodo={deleteTodo} updateTodo={updateTodo } />
 
-            <TodoComputed />
+            <TodoComputed  completedItemsLeft={completedItemsLeft}  clearCompleted={ clearCompleted }/>
 
           </main>
 
-          <TodoFilter />
+          <TodoFilter changeFilter ={changeFilter } />
 
           <footer className="text-center">Drag and drop to reorder list</footer>
         </div>
