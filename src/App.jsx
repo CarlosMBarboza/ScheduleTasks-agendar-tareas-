@@ -39,10 +39,18 @@ const [todos, setTodos] = useState(initialState)
 const createTodo = (title)=>{
   const newTodo = {
     id: Date.now(),
-    title,
+    title: title.trim(),
     completed: false,
   }
   setTodos([...todos, newTodo])
+}
+
+const deleteTodo = (id)=>{
+  setTodos(todos.filter((todo)=>todo.id!==id))
+}
+
+const updateTodo = (id)=>{
+  setTodos(todos.map((todo)=>todo.id===id ? {...todo, completed:!todo.completed} : todo))
 }
 
   return (
@@ -54,7 +62,7 @@ const createTodo = (title)=>{
           <TodoCreate createTodo={createTodo} />
 
           <main className="mt-8 bg-white rounded-md">
-            <TodoList todos={todos}/>
+            <TodoList todos={todos} deleteTodo={deleteTodo} updateTodo={updateTodo } />
 
             <TodoComputed />
 

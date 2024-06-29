@@ -1,4 +1,4 @@
-import {MoonIcon} from '../component/icons/MoonIcon';
+import {IconMoon} from './icons/IconMoon';
 
 export const Header = () => {
   return (
@@ -6,7 +6,7 @@ export const Header = () => {
             <div className="flex justify-between mb-4">
               <h1 className="uppercase font-semibold tracking-tight text-white text-3xl">Schedule <span className="lowercase"> tasks</span></h1>
               <button>
-                <MoonIcon className=" fill-red-400" />
+                <IconMoon className=" fill-red-400" />
               </button>
             </div>
            

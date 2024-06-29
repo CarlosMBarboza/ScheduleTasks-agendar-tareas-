@@ -1,6 +1,6 @@
 
 
-export const MoonIcon = ({props}) => {
+export const IconMoon = ({props}) => {
   return (
     <svg 
     {...props}
