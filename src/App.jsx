@@ -1,61 +1,68 @@
-import { CrossIcon } from "./component/icons/CrossIcon"
-import { MoonIcon } from "./component/icons/MoonIcon"
+import { useState } from "react"
+import { Header } from "./component/Header"
+import { TodoComputed } from "./component/TodoComputed"
+import { TodoFilter } from "./component/TodoFilter"
+import { TodoList } from "./component/TodoList"
+import { TodoCreate } from "./component/TodoCreate"
 
+const initialState =[
+  {
+    id: 1,
+    title: "Learn React",
+    completed: true,
+  },
+  {
+    id: 2,
+    title: "Learn Vite",
+    completed: false,
+  },
+  {
+    id: 3,
+    title: "Learn Tailwind",
+    completed: false,
+  },
+  {
+    id: 4,
+    title: "Learn Svelte",
+    completed: false,
+  },
+  {
+    id: 5,
+    title: "Learn Vue",
+    completed: false,
+  }
+]
 
 function App() {
+const [todos, setTodos] = useState(initialState)
 
+const createTodo = (title)=>{
+  const newTodo = {
+    id: Date.now(),
+    title,
+    completed: false,
+  }
+  setTodos([...todos, newTodo])
+}
 
   return (
     <>
       <div className="bg-[url('./images/bg-mobile-light.jpg')] bg-no-repeat bg-contain bg-gray-300">
         <div className="container mx-auto px-4 pt-8">
+          <Header />
 
-          <header>
-            <div className="flex justify-between mb-4">
-              <h1 className="uppercase font-semibold tracking-tight text-white text-3xl">Schedule <span className="lowercase"> tasks</span></h1>
-              <button>
-                <MoonIcon className=" fill-red-400" />
-              </button>
-            </div>
-            <form className="bg-white flex gap-4 items-center rounded-md overflow-hidden  p-4">
-              <span className="inline-block h-5 w-5 rounded-full border-2"></span>
-              <input className="w-full text-gray-400 outline-none" type="text" placeholder="New tasks " />
-            </form>
-          </header>
+          <TodoCreate createTodo={createTodo} />
 
           <main className="mt-8 bg-white rounded-md">
-            <article className="flex gap-4 border-b   p-4 items-center">
-              <button className="inline-block h-5 w-5 rounded-full flex-none border-2"></button>
-              <p className="text-gray-600 grow">Complete online</p>
-              <button className="flex-none">
-                <CrossIcon />
-              </button>
-            </article>
-            <article className="flex gap-4 border-b   p-4 items-center">
-              <button className="inline-block h-5 w-5 rounded-full flex-none border-2"></button>
-              <p className="text-gray-600 grow">Complete online</p>
-              <button className="flex-none">
-                <CrossIcon />
-              </button>
-            </article>
-            <article className="flex gap-4 border-b  p-4 items-center">
-              <button className="inline-block h-5 w-5 rounded-full flex-none border-2"></button>
-              <p className="text-gray-600 grow">Complete online</p>
-              <button className="flex-none">
-                <CrossIcon />
-              </button>
-            </article>
-            <section className=" flex justify-between   p-4 items-center">
-              <span className="text-gray-400">5 item left</span>
-              <button className="text-gray-400">Clear Completed</button>
-            </section>
+            <TodoList todos={todos}/>
+
+            <TodoComputed />
+
           </main>
-          <section className="bg-white mt-8 flex justify-center p-4 rounded-md gap-4">
-            <button className="text-blue-600">All</button>
-            <button className="hover:text-blue-600">Active</button>
-            <button className="hover:text-blue-600">Completed</button>
-          </section>
-          <p className="text-center">Drag and drop to reorder list</p>
+
+          <TodoFilter />
+
+          <footer className="text-center">Drag and drop to reorder list</footer>
         </div>
       </div>
     </>
